@@ -18,9 +18,9 @@ U have 4 types:
 This button works if it was pressed. You can make the event what will happen if the button is pressed or aimed.
 Or you can just ask it, call:
 
-<button = new ClassicButton(parametres);
+< button = new ClassicButton(parametres);
 Console.WriteLine(button.ButtonPressed);
-Console.WriteLine(button.ButtonAimed);>
+Console.WriteLine(button.ButtonAimed); >
 
 #### Active Buttons ####
 
