@@ -35,6 +35,7 @@ namespace Engine
                 case 2:
                     text.Position = new Vector2f(coords.X - textLength, coords.Y);
                     break;
+                default: throw new ArgumentOutOfRangeException("mode can be only 0, 1 or 2 what means right, center or left");
             }
             text.FillColor = color;
 
