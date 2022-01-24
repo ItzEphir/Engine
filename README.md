@@ -1,6 +1,6 @@
 # Engine project for SFML.net#
 
-##There is some useful stuff for simple programming on SFML.net with c\#. ##
+## There is some useful stuff for simple programming on SFML.net with c\#. ##
 
 + Buttons
 + Some useful functions with Vector2f and printing on the window
