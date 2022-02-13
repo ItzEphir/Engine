@@ -15,9 +15,10 @@ namespace Engine
         Color activeColorTitle;
 
         public ActiveButton(Vector2f Resolution, Vector2f OriginalResolution, string message, Vector2f coords, Vector2f size,
-            Color color, Color activeColor, Color colorTitle, Color activeColorTitle, Vector2f hitbox, ButtonPressing whenPressed, ButtonAiming whenAimed,
+            Color color, Color activeColor, Color colorTitle, Color activeColorTitle, Vector2f hitbox,
+            ButtonAction whenPressed, ButtonAction whenAimed, ButtonAction whenReleased,
             string font = "", uint fontSize = 20, uint delay = 120, byte center = 0, bool automaticalOptimisationSize = true)
-            :base(Resolution, OriginalResolution, message, coords, size, color, colorTitle, hitbox, whenPressed, whenAimed, font, fontSize, delay, center, automaticalOptimisationSize)
+            :base(Resolution, OriginalResolution, message, coords, size, color, colorTitle, hitbox, whenPressed, whenAimed, whenReleased, font, fontSize, delay, center, automaticalOptimisationSize)
         { 
             this.activeColor = activeColor; 
             this.activeColorTitle = activeColorTitle; 
@@ -34,10 +35,21 @@ namespace Engine
 
         public override void Draw(RenderWindow rw)
         {
-            if (this.color.A != 0) Engine.Rectangle(rw, this.coords, this.size, this.color);
-            if (this.Find(new Vector2f(Mouse.GetPosition().X, Mouse.GetPosition().Y)) && this.activeColor.A != 0) Engine.Rectangle(rw, this.coords, this.size, this.activeColor);
-            rw.PrintText(this.message, this.coords, this.fontSize, this.color, this.font);
-            if (this.Find(new Vector2f(Mouse.GetPosition().X, Mouse.GetPosition().Y)) && this.activeColorTitle.A != 0) rw.PrintText(this.message, this.coords, this.fontSize, this.activeColorTitle, this.font);
+            if (this.Find(new Vector2f(Mouse.GetPosition(rw).X, Mouse.GetPosition(rw).Y)))
+            {
+                if (this.activeColor.A != 0)
+                    Functions.Rectangle(rw, this.coords, this.size, this.activeColor);
+            }
+            else if (this.color.A != 0)
+                Functions.Rectangle(rw, this.coords, this.size, this.color);
+
+            if (this.Find(new Vector2f(Mouse.GetPosition(rw).X, Mouse.GetPosition(rw).Y)))
+            {
+                if (this.activeColorTitle.A != 0)
+                    rw.PrintText(this.message, this.textCoords, this.fontSize, this.activeColorTitle, this.font);
+            }
+            else
+                rw.PrintText(this.message, this.textCoords, this.fontSize, this.colorTitle, this.font);
         }
 
         public override void Update(RenderWindow rw)

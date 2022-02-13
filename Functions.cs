@@ -5,7 +5,7 @@ using SFML.System;
 
 namespace Engine
 {
-    public static class Engine
+    public static class Functions
     {
         public static void PrintText(this RenderWindow rw, string message, Vector2f coords, uint size, Color color, Font font, uint mode = 0)
         {

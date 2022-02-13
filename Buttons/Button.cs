@@ -10,12 +10,15 @@ namespace Engine
     {
         public bool ButtonPressed { get; protected set; }
         public bool ButtonAimed { get; protected set; }
+        public bool ButtonReleased { get; protected set; }
 
-        public delegate void ButtonPressing();
-        public event ButtonPressing ButtonEventPressed;
-
-        public delegate void ButtonAiming();
-        public event ButtonAiming ButtonEventAimed;
+        public delegate void ButtonAction();
+        public ButtonAction WhenPressed;
+        public event ButtonAction ButtonEventPressed;
+        public ButtonAction WhenAimed;
+        public event ButtonAction ButtonEventAimed;
+        public ButtonAction WhenReleased;
+        public event ButtonAction ButtonEventReleased;
 
         protected Vector2f coords;
         protected Vector2f textCoords;
@@ -31,24 +34,30 @@ namespace Engine
         protected float textLength;
         protected float letterLength;
 
-        protected Button(Vector2f Resolution, Vector2f OriginalResolution, string message, Vector2f coords, Vector2f size, Color color, Color colorTitle, Vector2f hitbox, ButtonPressing whenPressed, ButtonAiming whenAimed,
+        protected Button(Vector2f Resolution, Vector2f OriginalResolution, string message, Vector2f coords, Vector2f size, Color color, Color colorTitle, Vector2f hitbox, ButtonAction whenPressed, ButtonAction whenAimed, ButtonAction whenReleased,
             string font = "", uint fontSize = 20, uint delay = 120, byte center = 0, bool automaticalOptimizationSize = true)
         {
             this.message = message;
 
             if (!(font == "")) this.font = new(font);
 
-            if (automaticalOptimizationSize) this.fontSize = (uint)(Resolution.Y * fontSize / OriginalResolution.Y);
-            else this.fontSize = fontSize;
+            if (automaticalOptimizationSize) 
+                this.fontSize = (uint)(Resolution.Y * fontSize / OriginalResolution.Y);
+            else 
+                this.fontSize = fontSize;
 
             this.textLength = new Text(this.message, this.font, this.fontSize).GetLocalBounds().Width;
             this.letterLength = new Text("A", this.font, this.fontSize).GetLocalBounds().Width;
 
-            if (hitbox == new Vector2f(0, 0)) this.hitbox = new Vector2f(-this.letterLength, 0);
-            else this.hitbox = hitbox;
+            if (hitbox == new Vector2f(0, 0)) 
+                this.hitbox = new Vector2f(-this.letterLength, 0);
+            else 
+                this.hitbox = hitbox;
 
-            if (size == new Vector2f(0, 0)) this.size = new Vector2f(this.textLength, this.fontSize * 2);
-            else this.size = size;
+            if (size == new Vector2f(0, 0)) 
+                this.size = new Vector2f(this.textLength, this.fontSize * 2);
+            else 
+                this.size = size;
 
             switch (center)
             {
@@ -61,7 +70,7 @@ namespace Engine
             this.textCoords = new Vector2f(this.coords.X, this.coords.Y);
 
             this.coords += this.hitbox;
-            this.size -= 2 * this.hitbox;
+            this.size -= 2.5f * this.hitbox;
 
             this.color = color;
             this.colorTitle = colorTitle;
@@ -69,27 +78,38 @@ namespace Engine
             this.buttonPressed = false;
             this.ButtonPressed = false;
 
-            this.ButtonEventPressed += whenPressed;
-            this.ButtonEventAimed += whenAimed;
+            this.WhenPressed = whenPressed;
+            this.ButtonEventPressed += this.WhenPressed;
+            this.WhenAimed = whenAimed;
+            this.ButtonEventAimed += this.WhenAimed;
+            this.WhenReleased += whenReleased;
+            this.ButtonEventReleased += this.WhenReleased;
         }
         protected Button(Vector2f Resolution, Vector2f OriginalResolution, string message, Vector2f coords, Vector2f size, Color color, Color colorTitle, Vector2f hitbox,
             string font = "", uint fontSize = 20, uint delay = 120, byte center = 0, bool automaticalOptimizationSize = true)
         {
             this.message = message;
 
-            if (!(font == "")) this.font = new(font);
+            if (!(font == "")) 
+                this.font = new(font);
 
-            if (automaticalOptimizationSize) this.fontSize = (uint)(Resolution.Y * fontSize / OriginalResolution.Y);
-            else this.fontSize = fontSize;
+            if (automaticalOptimizationSize) 
+                this.fontSize = (uint)(Resolution.Y * fontSize / OriginalResolution.Y);
+            else 
+                this.fontSize = fontSize;
 
             this.textLength = new Text(this.message, this.font, this.fontSize).GetLocalBounds().Width;
             this.letterLength = new Text("A", this.font, this.fontSize).GetLocalBounds().Width;
 
-            if (hitbox == new Vector2f(0, 0)) this.hitbox = new Vector2f(-this.letterLength, 0);
-            else this.hitbox = hitbox;
+            if (hitbox == new Vector2f(0, 0)) 
+                this.hitbox = new Vector2f(-this.letterLength, 0);
+            else 
+                this.hitbox = hitbox;
 
-            if (size == new Vector2f(0, 0)) this.size = new Vector2f(this.textLength, this.fontSize * 2);
-            else this.size = size;
+            if (size == new Vector2f(0, 0)) 
+                this.size = new Vector2f(this.textLength, this.fontSize * 2);
+            else 
+                this.size = size;
 
             switch (center)
             {
@@ -110,8 +130,9 @@ namespace Engine
             this.buttonPressed = false;
             this.ButtonPressed = false;
 
-            this.ButtonEventPressed += () => { };
-            this.ButtonEventAimed += () => { };
+            this.WhenPressed = () => { };
+            this.WhenAimed = () => { };
+            this.WhenReleased = () => { };
         }
 
         public abstract void Draw(RenderWindow rw);
@@ -140,12 +161,20 @@ namespace Engine
 
         protected void aim()
         {
+            Console.WriteLine("aimed");
             this.ButtonEventAimed?.Invoke();
         }
 
         protected void pressed()
         {
+            Console.WriteLine("pressed");
             this.ButtonEventPressed?.Invoke();
+        }
+
+        protected void released()
+        {
+            Console.WriteLine("released");
+            this.ButtonEventReleased?.Invoke();
         }
     }
 }
