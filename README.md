@@ -51,42 +51,42 @@ It has some parametres:
   2. 1 means center
   3. 2 means left
 You can call it:
-PrintText(rw, "Example", rw.Size / 2, 12, Color.White, Game.Font, 1)
+  PrintText(rw, "Example", rw.Size / 2, 12, Color.White, Game.Font, 1)
 
 #### Distance ####
 It counts the distance from one point to another.
 You can call it:
-Vector2f a = new Vector2f(100, 100);
-Vector2f b = new Vector2f(300, 300);
-float length = a.Distance(b);
+  Vector2f a = new Vector2f(100, 100);
+  Vector2f b = new Vector2f(300, 300);
+  float length = a.Distance(b);
 
 #### Normalize ####
 It makes a Vector2f what disctance is 1 and it is directed to the same side as original line of two Vectors.
 You can call it:
-Vector2f a = new Vector2f(100, 100);
-Vector2f b = new Vector2f(200, 200);
-Vector2f direction = a.Normalise(b);
+  Vector2f a = new Vector2f(100, 100);
+  Vector2f b = new Vector2f(200, 200);
+  Vector2f direction = a.Normalise(b);
 
 #### Load ####
 It returns string from file.
 You can call it:
-string info = Load("files/save.txt");
+  string info = Load("files/save.txt");
 
 #### Save ####
 It saves string to the file.
 You can call it:
-string info = "I should be changed";
-Save("files/save.txt", info);
+  string info = "I should be changed";
+  Save("files/save.txt", info);
 
 #### Rectangle ####
 It makes a rectangle on the coords with your size and color.
 You can call it:
-RenderWindow rw = new RenderWindow(vm, "Example");
-Rectangle(rw, rw.Size / 2, new Vector2f(100, 100), Color.White);
+  RenderWindow rw = new RenderWindow(vm, "Example");
+  Rectangle(rw, rw.Size / 2, new Vector2f(100, 100), Color.White);
 
 #### NormalFloat ####
 It makes a float to aright number.
 You can call it:
-float a = 3.0f;
-float b = 4.0f;
-float result = (a + b).NormalFloat(1f);
+  float a = 3.0f;
+  float b = 4.0f;
+  float result = (a + b).NormalFloat(1f);
