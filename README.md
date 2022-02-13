@@ -50,6 +50,7 @@ It has some parametres:
   1. 0 means right
   2. 1 means center
   3. 2 means left
+
 You can call it:
   PrintText(rw, "Example", rw.Size / 2, 12, Color.White, Game.Font, 1)
 
